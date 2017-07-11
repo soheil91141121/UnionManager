@@ -1,0 +1,216 @@
+﻿@model UnionManager.ViewModels.User.UserViewModel
+@using MvcPager
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li class="active">کاربران</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">لیست کاربران</header>
+            <div class="row" style="padding: 10px;">
+                <div class="col-lg-10">
+                    @Html.ActionLink("افزودن کاربر جدید", "AddUser", null, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                    <a href="#modal_SearchUser" data-toggle="modal" class="btn btn-default">جستجوی کاربر</a>
+                    <a href="/User/SearchUser" class="btn btn-default" title="نمایش کل کاربران" id="btn_RefreshList"><i class="icon-refresh"></i></a>
+                    <p style="display: inline; margin-right: 20px;">نتایـج :</p>
+                    <p style="display: inline; color: #b32400; margin-right: 5px;">@Model.TotalItemCount &nbsp; از &nbsp; @Model.TotalModelCount</p>
+                </div>
+                <div class="col-lg-2">
+                    <a href="/User/ExportToExcel" class="btn btn-round btn-danger" id="">خروجـی اکسـل <i class="icon-table"></i></a>
+                </div>
+            </div>
+            @Html.Partial("_UserList", Model)
+            <div class="row" id="div_Paging">
+                @Html.Pager(10, Model.CurrentPage, Model.TotalItemCount)
+                <p style="display: inline; margin-right: 20px;">صفحـه :</p>
+                <p style="display: inline; color: #b32400; margin-right: 5px;">@Model.CurrentPage &nbsp; از &nbsp; @Model.TotalPageCount</p>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--search modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_SearchUser" class="modal fade">
+    <div class="modal-dialog" style="width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseSearchUserModal">×</button>
+                <h4 class="modal-title">جستجوی کاربر</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("SearchUser", "User", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        @Html.TextBox("Name", null, new { @class = "form-control", id = "txt_Name", placeholder = "نام" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("Family", null, new { @class = "form-control", id = "txt_Family", placeholder = "نام خانوادگی" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("RoleId", new SelectList(Model.Roles, "Id", "Name"), "همه ی نقش ها", new { @class = "form-control m-bot15", id = "drp_RoleId" })
+                    </div>
+                    <div class="form-group">
+                        <select id="drp_Gender" name="Gender" class="form-control">
+                            <option value="">همه جنسیت ها</option>
+                            <option value="1">مرد</option>
+                            <option value="0">زن</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("FatherName", null, new { @class = "form-control", id = "txt_FatherName", placeholder = "نام پدر" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("NationalCode", null, new { @class = "form-control", id = "txt_NationalCode", placeholder = "کد ملی" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("IdNo", null, new { @class = "form-control", id = "txt_IdNo", placeholder = "شماره شناسنامه" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("Mobile", null, new { @class = "form-control", id = "txt_Mobile", placeholder = "شماره همراه" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("Tel", null, new { @class = "form-control", id = "txt_Tel", placeholder = "تلفن ثابت" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("Username", null, new { @class = "form-control", id = "txt_Username", placeholder = "نام کاربری" })
+                    </div>
+                    <div class="form-group">
+                        <select id="drp_IsInsuranced" name="IsInsuranced" class="form-control">
+                            <option value="">وضعیت بیمه</option>
+                            <option value="0">عادی</option>
+                            <option value="1">بیمه شده</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="drp_Status" name="Status" class="form-control">
+                            <option value="">همه وضعیت ها</option>
+                            <option value="0">غیرفعال</option>
+                            <option value="1">فعال</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-block" id="btn_Search">جستجو</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search modal -->
+
+<!-- changePassword modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_ChangePassword" class="modal fade">
+    <div class="modal-dialog" style="width: 500px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseChangePassword">×</button>
+                <h4 class="modal-title" id="lbl_Username"></h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("ChangePassword", "User", null, new AjaxOptions { Url = "/User/ChangePassword", HttpMethod = "Post", OnSuccess = "ChangePasswordComplete" }))
+                {
+                    @Html.Hidden("userId", null, new { id = "hidden_UserId" })
+                    <div class="form-group">
+                        <label class="required">کلمه عبور جدید</label>
+                        <input type="password" class="form-control" name="password" id="txt_NewPass" value="" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="required">تکرار کلمه عبور جدید</label>
+                        <input type="password" class="form-control" name="confirmPassword" id="txt_ConfirmNewPass" value="" required />
+                    </div>
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end changePassword modal -->
+
+@section scripts{
+    <script src="~/Contents/Template/FlatlabRTL/js/form-component.js"></script>
+    <script type="text/javascript">
+        // paging style
+        $("#div_Paging").css('padding', '30px');
+        $("#div_Paging span").css('padding', '10px 15px 10px 15px').css('border', '1px solid #b3b3b3').css('float', 'right');
+        $("#div_Paging a").css('padding', '10px 15px 10px 15px').css('border', '1px solid #b3b3b3').css('float', 'right');
+        $("#div_Paging .current").css('background', '#cccccc');
+        /////////////
+        function deleteUser(id) {
+            if (confirm('کاربر انتخاب شده حذف می شود. آیا مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/User/DeleteUser",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        eval(result.Script);
+                        if (result.Success) {
+                            window.location = '/User/Users';
+                        }
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            }
+        }
+
+        function changePassword(id)
+        {
+            getUsername(id);
+            $("#hidden_UserId").val(id);
+            $("#txt_NewPass").val('');
+            $("#txt_ConfirmNewPass").val('');
+        }
+
+        function getUsername(id)
+        {
+            $.ajax({
+                url: "/User/GetUsername",
+                data: { id: id },
+                type: "Post",
+                datatype: "Json",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#lbl_Username").text(data.username);
+                    }
+                }
+            });
+        }
+
+        function ChangePasswordComplete(data)
+        {
+            eval(data.Script);
+            if(data.Success)
+            {
+                $("#txt_NewPass").val('');
+                $("#txt_ConfirmNewPass").val('');
+                $("#btn_CloseChangePassword").click();
+            }
+        }
+
+        ///////////
+        $("#txt_Name").val('@Session["User_Name"]');
+        $("#txt_Family").val('@Session["User_Family"]');
+        $("#drp_RoleId").val('@Session["User_RoleId"]');
+        $("#txt_FatherName").val('@Session["User_FatherName"]');
+        $("#drp_Gender").val('@Session["User_Gender"]');
+        $("#txt_NationalCode").val('@Session["User_NationalCode"]');
+        $("#txt_IdNo").val('@Session["User_IdNo"]');
+        $("#txt_Mobile").val('@Session["User_Mobile"]');
+        $("#txt_Tel").val('@Session["User_Tel"]');
+        $("#txt_Username").val('@Session["User_Username"]');
+        $("#drp_IsInsuranced").val('@Session["User_IsInsuranced"]');
+        $("#drp_Status").val('@Session["User_Status"]');
+    </script>
+}

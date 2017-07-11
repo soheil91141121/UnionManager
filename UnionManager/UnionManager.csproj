@@ -1,0 +1,634 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72E919E0-4D65-4F6E-ABFF-EE9F07C1F2B4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnionManager</RootNamespace>
+    <AssemblyName>UnionManager</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Json.NET.Web, Version=1.0.49.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Json.NET.Web.1.0.49\lib\portable45-net45+win8+wpa81\Json.NET.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPager, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcPager.1.0.0\lib\MvcPager.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Contents\Template\FlatlabRTL\404.html" />
+    <Content Include="Contents\Template\FlatlabRTL\500.html" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-colorpicker\css\colorpicker.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-colorpicker\img\alpha.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-colorpicker\img\hue.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-colorpicker\img\saturation.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-datepicker\css\datepicker.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-daterangepicker\date.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-daterangepicker\daterangepicker.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\bootstrap-daterangepicker\daterangepicker.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\chart-master\Chart.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\ckeditor\ckeditor.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\data-tables\DT_bootstrap.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\data-tables\jquery.dataTables.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\css\font-awesome.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\fullcalendar\fullcalendar\bootstrap-fullcalendar.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\fullcalendar\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\gritter\css\jquery.gritter.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\gritter\images\gritter-light.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\gritter\images\gritter.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\gritter\images\ie-spacer.gif" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\gritter\js\jquery.gritter.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-easy-pie-chart\jquery.easy-pie-chart.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-easy-pie-chart\jquery.easy-pie-chart.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\css\jquery.fileupload-ui.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\img\loading.gif" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\img\progressbar.gif" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\jquery.fileupload-fp.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\jquery.fileupload-ui.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\jquery.fileupload.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\jquery.iframe-transport.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\vendor\canvas-to-blob.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\vendor\jquery.ui.widget.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\vendor\load-image.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-file-upload\js\vendor\tmpl.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-knob\js\jquery.knob.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\animated-overlay.gif" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\jquery-ui-1.10.1.custom.min.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\jquery-ui\jquery-ui-1.10.1.custom.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\morris.js-0.4.3\morris.css" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\morris.js-0.4.3\morris.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\morris.js-0.4.3\raphael-min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\basic_table.html" />
+    <Content Include="Contents\Template\FlatlabRTL\blank.html" />
+    <Content Include="Contents\Template\FlatlabRTL\buttons.html" />
+    <Content Include="Contents\Template\FlatlabRTL\calendar.html" />
+    <Content Include="Contents\Template\FlatlabRTL\charts.html" />
+    <Content Include="Contents\Template\FlatlabRTL\css\bootstrap-reset.css" />
+    <Content Include="Contents\Template\FlatlabRTL\css\bootstrap.min.css" />
+    <Content Include="Contents\Template\FlatlabRTL\css\owl.carousel.css" />
+    <Content Include="Contents\Template\FlatlabRTL\css\style-responsive.css" />
+    <Content Include="Contents\Template\FlatlabRTL\css\style.css" />
+    <Content Include="Contents\Template\FlatlabRTL\dynamic_table.html" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\rtl.css" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Yekan-modified.svg" />
+    <Content Include="Contents\Template\FlatlabRTL\font_awesome.html" />
+    <Content Include="Contents\Template\FlatlabRTL\form_component.html" />
+    <Content Include="Contents\Template\FlatlabRTL\form_validation.html" />
+    <Content Include="Contents\Template\FlatlabRTL\form_wizard.html" />
+    <Content Include="Contents\Template\FlatlabRTL\general.html" />
+    <Content Include="Contents\Template\FlatlabRTL\grids.html" />
+    <Content Include="Contents\Template\FlatlabRTL\img\404_icon.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\500_icon.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\arrow-up.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\avatar-mini.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\avatar-mini2.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\avatar-mini3.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\avatar-mini4.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\avatar1.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\avatar1_small.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\chart-texture.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\chat-avatar.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\chat-avatar2.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\check-off.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\check-on.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\radio-off.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\radio-on.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\customSelect-arrow.gif" />
+    <Content Include="Contents\Template\FlatlabRTL\img\favicon.html" />
+    <Content Include="Contents\Template\FlatlabRTL\img\follower-avatar.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\left-arrow.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\mail-avatar.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\mask.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\pro-ac-1.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\pro-ac-2.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\product1.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\product2.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\product3.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\profile-avatar.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\right-arrow.png" />
+    <Content Include="Contents\Template\FlatlabRTL\img\ring.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\search-icon.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\sm-img-1.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\sm-img-2.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\sm-img-3.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\img\vector-lab.jpg" />
+    <Content Include="Contents\Template\FlatlabRTL\inbox.html" />
+    <Content Include="Contents\Template\FlatlabRTL\index.html" />
+    <Content Include="Contents\Template\FlatlabRTL\invoice.html" />
+    <Content Include="Contents\Template\FlatlabRTL\js\all-chartjs.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\bootstrap-switch.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\bootstrap.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\common-scripts.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\dynamic-table.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\easy-pie-chart.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\external-dragging-calendar.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\form-component.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\form-validation-script.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\ga.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\gritter.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery-1.8.3.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery-ui-1.9.2.custom.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.customSelect.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.nicescroll.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.scrollTo.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.sparkline.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.stepy.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.tagsinput.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\jquery.validate.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\morris-script.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\owl.carousel.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\sliders.js" />
+    <Content Include="Contents\Template\FlatlabRTL\js\sparkline-chart.js" />
+    <Content Include="Contents\Template\FlatlabRTL\login.html" />
+    <Content Include="Contents\Template\FlatlabRTL\profile-activity.html" />
+    <Content Include="Contents\Template\FlatlabRTL\profile-edit.html" />
+    <Content Include="Contents\Template\FlatlabRTL\profile.html" />
+    <Content Include="Contents\Template\FlatlabRTL\slider.html" />
+    <Content Include="Contents\Template\FlatlabRTL\widget.html" />
+    <Content Include="Content\PersianDatePicker.css" />
+    <Content Include="Content\PersianDatePicker.min.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Files\Icons\202px-Non-EU-section-with-IR_svg.jpg" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\DomainModels\UnionEntityModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnionEntityModel.edmx</DependentUpon>
+      <LastGenOutput>UnionEntityModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DomainModels\UnionEntityModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UnionEntityModel.edmx</DependentUpon>
+      <LastGenOutput>UnionEntityModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="scripts\ai.0.22.9-build00167.js" />
+    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\ckeditor\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\ckeditor\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\ckeditor\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\font\fontawesome-webfontd41d.eot" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\font\fontawesome-webfontf77b.eot" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\font\fontawesome-webfontf77b.ttf" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\font\fontawesome-webfontf77b.woff" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\font-awesome\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\assets\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\css\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\css\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\css\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Descr.WD3" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\glyphicons-halflings-regular.eot%40" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\glyphicons-halflings-regulard41d.eot" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Yekan-modified.eot" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Yekan-modified.ttf" />
+    <Content Include="Contents\Template\FlatlabRTL\fonts\Yekan-modified.woff" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\Descr.WD3" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\img\checkbox\Thumbs.db" />
+    <Content Include="Contents\Template\FlatlabRTL\img\Descr.WD3" />
+    <Content Include="Contents\Template\FlatlabRTL\img\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\img\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\img\PersianScript.ir.url" />
+    <Content Include="Contents\Template\FlatlabRTL\img\Thumbs.db" />
+    <Content Include="Contents\Template\FlatlabRTL\js\Forum.url" />
+    <Content Include="Contents\Template\FlatlabRTL\js\Free Upload File.url" />
+    <Content Include="Contents\Template\FlatlabRTL\js\PersianScript.ir.url" />
+    <None Include="Properties\PublishProfiles\Union-Publish-Test.pubxml" />
+    <None Include="scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="scripts\ajaxfileupload.js" />
+    <Content Include="scripts\jquery-3.1.1.js" />
+    <Content Include="scripts\jquery-3.1.1.min.js" />
+    <Content Include="scripts\jquery-3.1.1.slim.js" />
+    <Content Include="scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="scripts\jquery.validate-vsdoc.js" />
+    <Content Include="scripts\jquery-ui-1.12.1.js" />
+    <Content Include="scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="scripts\jquery.validate.js" />
+    <Content Include="scripts\jquery.validate.min.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="scripts\PersianDatePicker.js" />
+    <Content Include="scripts\PersianDatePicker.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BossController.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\GroupAndColorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\RelationController.cs" />
+    <Compile Include="Controllers\TradeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VehicleController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\HtmlHelpers\ImageHelper.cs" />
+    <Compile Include="Helpers\HtmlHelpers\UploadHelper.cs" />
+    <Compile Include="Helpers\Json\JsonData.cs" />
+    <Compile Include="Helpers\Utilities\MessageBox.cs" />
+    <Compile Include="Helpers\Utilities\SessionHelper.cs" />
+    <Compile Include="Helpers\Utilities\Utilities.cs" />
+    <Compile Include="Helpers\Utilities\ViewHelper.cs" />
+    <Compile Include="Models\DomainModels\Activity.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\ActivityType.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\Color.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\Relation.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\Role.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\Trade.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\TradeGroup.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\UnionEntityModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnionEntityModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\UnionEntityModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\UnionEntityModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UnionEntityModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\User.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\Vehicle.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DomainModels\VehicleGroup.cs">
+      <DependentUpon>UnionEntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EntityModels\RoleMetaData.cs" />
+    <Compile Include="Models\EntityModels\RelationMetaData.cs" />
+    <Compile Include="Models\EntityModels\ColorMetaData.cs" />
+    <Compile Include="Models\EntityModels\VehicleGroupMetaData.cs" />
+    <Compile Include="Models\EntityModels\VehicleMetaData.cs" />
+    <Compile Include="Models\EntityModels\TradeGroupMetaData.cs" />
+    <Compile Include="Models\EntityModels\TradeMetaData.cs" />
+    <Compile Include="Models\EntityModels\UserMetaData.cs" />
+    <Compile Include="Models\Enums\status.cs" />
+    <Compile Include="Models\ExcelModels\UserExcelModel.cs" />
+    <Compile Include="Models\ExcelModels\TradeExcelModel.cs" />
+    <Compile Include="Models\ExcelModels\VehicleExcelModel.cs" />
+    <Compile Include="Models\Providers\UnionRoleProvider.cs" />
+    <Compile Include="Models\Repositories\RelationRepository.cs" />
+    <Compile Include="Models\Repositories\ColorRepository.cs" />
+    <Compile Include="Models\Repositories\VehicleGroupRepository.cs" />
+    <Compile Include="Models\Repositories\TradeGroupRepository.cs" />
+    <Compile Include="Models\Repositories\VehicleRepository.cs" />
+    <Compile Include="Models\Repositories\TradeRepository.cs" />
+    <Compile Include="Models\Repositories\RoleRepository.cs" />
+    <Compile Include="Models\Repositories\UserRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Boss\BossViewModel.cs" />
+    <Compile Include="ViewModels\GroupAndColor\GroupViewModel.cs" />
+    <Compile Include="ViewModels\Profile\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\Relation\RelationViewModel.cs" />
+    <Compile Include="ViewModels\User\UserDetailViewModel.cs" />
+    <Compile Include="ViewModels\Vehicle\VehicleDetailViewModel.cs" />
+    <Compile Include="ViewModels\Trade\AddTradeViewModel.cs" />
+    <Compile Include="ViewModels\Vehicle\AddVehicleViewModel.cs" />
+    <Compile Include="ViewModels\User\AddUserViewModel.cs" />
+    <Compile Include="ViewModels\User\UserViewModel.cs" />
+    <Compile Include="ViewModels\Vehicle\VehicleViewModel.cs" />
+    <Compile Include="ViewModels\Trade\TradeViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\DomainModels\UnionEntityModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UnionEntityModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DomainModels\UnionEntityModel.edmx.diagram">
+      <DependentUpon>UnionEntityModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Trade\Trades.cshtml" />
+    <Content Include="Views\Trade\_TradeList.cshtml" />
+    <Content Include="scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Vehicle\Vehicles.cshtml" />
+    <Content Include="Views\Vehicle\_VehicleList.cshtml" />
+    <Content Include="Views\User\Users.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
+    <Content Include="Views\User\_UserList.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
+    <Content Include="Views\Vehicle\AddVehicle.cshtml" />
+    <Content Include="Views\Vehicle\EditVehicle.cshtml" />
+    <Content Include="Views\Trade\AddTrade.cshtml" />
+    <Content Include="Views\Trade\EditTrade.cshtml" />
+    <Content Include="Views\Home\Error404.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\GroupAndColor\Groups.cshtml" />
+    <Content Include="Views\GroupAndColor\_TradeGroupList.cshtml" />
+    <Content Include="Views\GroupAndColor\_VehicleGroupList.cshtml" />
+    <Content Include="Views\GroupAndColor\AddTradeGroup.cshtml" />
+    <Content Include="Views\GroupAndColor\EditTradeGroup.cshtml" />
+    <Content Include="Views\GroupAndColor\AddVehicleGroup.cshtml" />
+    <Content Include="Views\GroupAndColor\EditVehicleGroup.cshtml" />
+    <Content Include="Views\Vehicle\VehicleDetail.cshtml" />
+    <Content Include="Views\User\UserDetail.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Profile\ProfileDetail.cshtml" />
+    <Content Include="Views\Profile\EditProfile.cshtml" />
+    <Content Include="Views\Relation\Relation.cshtml" />
+    <Content Include="Views\Relation\_UserAndVehiclesList.cshtml" />
+    <Content Include="Views\Relation\_TradeListRelation.cshtml" />
+    <Content Include="Views\Relation\_UserListRelation.cshtml" />
+    <Content Include="Views\Relation\_VehicleListRelation.cshtml" />
+    <Content Include="Views\Boss\Details.cshtml" />
+    <Content Include="Views\Boss\_UserAndVehiclesListBoss.cshtml" />
+    <Content Include="Views\GroupAndColor\_ColorList.cshtml" />
+    <Content Include="Views\GroupAndColor\AddColor.cshtml" />
+    <Content Include="Views\GroupAndColor\EditColor.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Files\UploadImages\" />
+    <Folder Include="scripts\jquery.ui_.datepicker1.8.14-cc-development\" />
+    <Folder Include="scripts\Noty\" />
+    <Folder Include="Views\Captcha\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51279</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51279/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

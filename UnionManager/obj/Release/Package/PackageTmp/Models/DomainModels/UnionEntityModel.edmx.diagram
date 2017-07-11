@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d49ac88eed9244959f1919efc18d9de7" Name="Diagram1">
+        <EntityTypeShape EntityType="db_UnionModel.Activity" Width="1.5" PointX="5.25" PointY="10" />
+        <EntityTypeShape EntityType="db_UnionModel.ActivityType" Width="1.5" PointX="3" PointY="6.5" />
+        <EntityTypeShape EntityType="db_UnionModel.Color" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="db_UnionModel.Relation" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="db_UnionModel.Role" Width="1.5" PointX="0.75" PointY="10.375" />
+        <EntityTypeShape EntityType="db_UnionModel.TradeGroup" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="db_UnionModel.Trade" Width="1.5" PointX="3" PointY="14.375" />
+        <EntityTypeShape EntityType="db_UnionModel.User" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="db_UnionModel.VehicleGroup" Width="1.5" PointX="0.75" PointY="5.625" />
+        <EntityTypeShape EntityType="db_UnionModel.Vehicle" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="db_UnionModel.FK_Activity_ActivityType" />
+        <AssociationConnector Association="db_UnionModel.FK_Activity_Users" />
+        <AssociationConnector Association="db_UnionModel.FK_Vehicles_Colors" />
+        <AssociationConnector Association="db_UnionModel.FK_Relations_Trades" />
+        <AssociationConnector Association="db_UnionModel.FK_Relations_Users" />
+        <AssociationConnector Association="db_UnionModel.FK_Relations_Vehicles" />
+        <AssociationConnector Association="db_UnionModel.FK_Users_Roles" />
+        <AssociationConnector Association="db_UnionModel.FK_Trades_TradeGroups" />
+        <AssociationConnector Association="db_UnionModel.FK_Vehicles_VehicleGroups" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

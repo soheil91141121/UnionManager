@@ -1,0 +1,58 @@
+﻿@model UnionManager.ViewModels.User.UserViewModel
+
+<div id="div_Users">
+    <table class="table table-striped border-top table-hover" id="sample_1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>نام و نام خانوادگی</th>
+                <th class="hidden-phone">تصویر</th>
+                <th class="hidden-phone">نقش کاربر</th>
+                <th>نام کاربری</th>
+                <th class="hidden-phone">جنسیت</th>
+                <th class="hidden-phone">وضعیت</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var counter = ((Model.CurrentPage - 1) * 10) + 1;
+                foreach (var item in Model.Users)
+                {
+                    <tr class="odd gradeX">
+                        <td>@counter</td>
+                        <td>@item.Name &nbsp; @item.Family</td>
+                        <td>@Html.ImageFor(modelItem => item.Image, new { height = "30" }, "default.png", "Files", "UploadImages")</td>
+                        <td class="hidden-phone">@item.Role.Name</td>
+                        <td>@item.Username</td>
+                        @if (@item.Gender == true)
+                        {
+                            <td class="hidden-phone">مرد</td>
+                        }
+                        else
+                        {
+                            <td class="hidden-phone">زن</td>
+                        }
+
+                        @if (@item.Status == "فعال")
+                        {
+                            <td class="hidden-phone"><span class="label label-success">فعال</span></td>
+                        }
+                        else
+                        {
+                            <td class="hidden-phone"><span class="label label-danger">غیر فعال</span></td>
+                        }
+                        <td>
+                            <a href="@Url.Action("EditUser", "User", new { id = @item.Id })" class="btn btn-primary btn-xs" title="ویرایش"><i class="icon-pencil"></i></a>
+                            <button class="btn btn-danger btn-xs" onclick="deleteUser(@item.Id)" title="حذف"><i class="icon-trash"></i></button>
+                            <a href="#modal_ChangePassword" data-toggle="modal" class="btn btn-success btn-xs" onclick="changePassword(@item.Id)" title="تغییر کلمه عبور"><i class="icon-lock"></i></a>
+                            <a href="@Url.Action("UserDetail", "User", new { id = @item.Id })" class="btn btn-default btn-xs" title="جزئیات"><i class="icon-eye-open"></i></a>
+                        </td>
+                    </tr>
+                    counter = counter + 1;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

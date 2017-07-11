@@ -1,0 +1,134 @@
+﻿@model UnionManager.ViewModels.Profile.ProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <aside class="profile-nav col-lg-3">
+        <section class="panel">
+            <div class="user-heading round">
+                <a href="#">
+                    @Html.ImageFor(model => model.User.Image, new { width = "128" }, "default.png", "Files", "UploadImages")
+                </a>
+                <h1 style="font-family: yekan,'Open Sans', sans-serif;">@Model.User.Name @Model.User.Family</h1>
+                <p style="margin-top: 10px;">@Model.User.Username</p>
+            </div>
+
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="/Profile/ProfileDetail"><i class="icon-user"></i>پروفایل</a></li>
+                <li><a href="/Profile/EditProfile"><i class="icon-edit"></i>ویرایش پروفایل</a></li>
+            </ul>
+
+        </section>
+    </aside>
+    <aside class="profile-info col-lg-9">
+        <section class="panel">
+            <div class="bio-graph-heading" style="font-style: normal; padding: 20px;">
+                اطلاعات پروفایل
+            </div>
+            <div class="panel-body bio-graph-info">
+                <div class="row">
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">نام</span>@Model.User.Name</p>
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">نام خانوادگی</span>@Model.User.Family</p>
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">نقش</span>@Model.User.Role.Name</p>
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.Gender == true)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">جنسیت</span>مرد</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">جنسیت</span>زن</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">کد ملی</span>@Model.User.NationalCode</p>
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.IdNo != null)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">شماره شناسنامه</span>@Model.User.IdNo</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">شماره شناسنامه</span>-</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.FatherName != null)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">نام پدر</span>@Model.User.FatherName</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">نام پدر</span>-</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.BirthDate != null)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">تاریخ تولد</span>@Convert.ToDateTime(Model.User.BirthDate).ToPersianDateString()</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">تاریخ تولد</span>-</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.IsInsuranced == true)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">بیمه شده</span>بله</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">بیمه شده</span>خیر</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.Mobile != null)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">شماره موبایل</span>@Model.User.Mobile</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">شماره موبایل</span>-</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        @if (Model.User.Tel != null)
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">تلفن ثابت</span>@Model.User.Tel</p>
+                        }
+                        else
+                        {
+                            <p style="color: #a55518;"><span style="color: #89817e;">تلفن ثابت</span>-</p>
+                        }
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">نام کاربری</span>@Model.User.Username</p>
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">وضعیت</span>@Model.User.Status</p>
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">اصناف</span>@Model.Trades</p>
+                    </div>
+                    <div class="bio-row">
+                        <p style="color: #a55518;"><span style="color: #89817e;">وسایل نقلیه</span>@Model.Vehicles</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </aside>
+</div>
+
+
+
+

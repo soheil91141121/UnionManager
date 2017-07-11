@@ -1,0 +1,234 @@
+﻿@model UnionManager.ViewModels.Profile.ProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Contents/persianDatepicker-master/persianDatepicker-master/css/persianDatepicker-default.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <aside class="profile-nav col-lg-3">
+        <section class="panel">
+            <div class="user-heading round">
+                <a href="/Profile/ProfileDetail">
+                    @Html.ImageFor(model => model.RealUser.Image, new { width = "128" }, "default.png", "Files", "UploadImages")
+                </a>
+                <h1 style="font-family: yekan,'Open Sans', sans-serif;">@Model.RealUser.Name @Model.RealUser.Family</h1>
+                <p style="margin-top: 10px;">@Model.RealUser.Username</p>
+            </div>
+
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="/Profile/ProfileDetail"><i class="icon-user"></i>پروفایل</a></li>
+                <li class="active"><a href="/Profile/EditProfile"><i class="icon-edit"></i>ویرایش پروفایل</a></li>
+            </ul>
+
+        </section>
+    </aside>
+    <aside class="profile-info col-lg-9">
+        <section class="panel">
+            <div class="bio-graph-heading" style="font-style: normal; padding: 20px;">
+                اطلاعات پروفایل
+            </div>
+            <div class="panel-body bio-graph-info">
+                @if (ViewBag.Message1 != null)
+                {
+                    if (ViewBag.Type == "Success")
+                    {
+                        <div class="alert alert-block alert-success fade in">
+                            <i class="icon-check-sign"></i> &nbsp; @ViewBag.Message1
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-block alert-danger fade in">
+                            <i class="icon-warning-sign"></i> &nbsp; @ViewBag.Message1
+                        </div>
+                    }
+                }
+
+                @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", autocomplete = "off" }))
+                {
+                    @Html.HiddenFor(model => model.User.Id)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Name, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.Name)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Family, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.Family, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.Family)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Gender, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.RadioButtonFor(model => model.User.Gender, "true") مرد
+                            @Html.RadioButtonFor(model => model.User.Gender, "false") زن
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.FatherName, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.FatherName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.FatherName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.NationalCode, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.NationalCode, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.NationalCode)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.IdNo, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.IdNo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.IdNo)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.BirthDate, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control", id = "txt_BirthDate" })
+                            @Html.ValidationMessageFor(model => model.User.BirthDate)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Mobile, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.Mobile, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.Mobile)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Tel, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.Tel, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.User.Tel)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2">
+                            @Html.LabelFor(model => model.User.IsInsuranced)
+                            @Html.CheckBoxFor(model => model.User.IsInsuranced)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Image, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            <div id="image-holder"></div>
+                            @Html.Upload("UploadImage", new { @class = "file-pos" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button type="submit" class="btn btn-success" style="padding-right: 30px; padding-left: 30px;">ذخیره</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+        <section>
+            <div class="panel panel-primary">
+                <div class="panel-heading">تغییر کلمه عبور</div>
+                <div class="panel-body">
+                    @if (ViewBag.Message2 != null)
+                    {
+                        if (ViewBag.Type2 == "Success")
+                        {
+                            <div class="alert alert-block alert-success fade in">
+                                <i class="icon-check-sign"></i> &nbsp; @ViewBag.Message2
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-block alert-danger fade in">
+                                <i class="icon-warning-sign"></i> &nbsp; @ViewBag.Message2
+                            </div>
+                        }
+                    }
+
+                    @using (Html.BeginForm("ChangePassword", "Profile", FormMethod.Post, new { @class = "form-horizontal", autocomplete = "off" }))
+                    {
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">کلمه عبور</label>
+                            <div class="col-lg-6">
+                                <input type="password" name="oldPass" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">کلمه عبور جدید</label>
+                            <div class="col-lg-6">
+                                <input type="password" name="newPass" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">تکرار کلمه عبور جدید</label>
+                            <div class="col-lg-6">
+                                <input type="password" name="repeatNewPass" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button type="submit" class="btn btn-info" style="padding-right: 30px; padding-left: 30px;">ذخیره</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    </aside>
+</div>
+
+@section scripts{
+    <script src="~/Contents/persianDatepicker-master/persianDatepicker-master/js/persianDatepicker.js"></script>
+    <script>
+        $("#txt_BirthDate").persianDatepicker({
+            cellWidth: 50,
+            cellHeight: 30,
+            fontSize: 12,
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            }
+        });
+
+        var birthDate = $("#txt_BirthDate");
+        if (birthDate.val() != "") {
+            var date = birthDate.val().split(' ')[0];
+            birthDate.val(date);
+        }
+
+        // show image
+        $("#UploadImage").change(function () {
+
+            if (typeof (FileReader) != "undefined") {
+
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("<img />", {
+                        "src": e.target.result,
+                        "width": "128"
+                    }).appendTo(image_holder);
+
+                }
+                image_holder.show();
+                reader.readAsDataURL($(this)[0].files[0]);
+            }
+        });
+    </script>
+}
+
+
+
+

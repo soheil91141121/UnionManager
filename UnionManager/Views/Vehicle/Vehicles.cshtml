@@ -1,0 +1,129 @@
+﻿@model UnionManager.ViewModels.Vehicle.VehicleViewModel
+@using MvcPager
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li class="active">وسایل نقلیه</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">لیست وسایل نقلیه</header>
+            <div class="row" style="padding: 10px 0px 10px 0px">
+                <div class="col-lg-10">
+                    @Html.ActionLink("افزودن وسیله نقلیه جدید", "AddVehicle", "Vehicle", null, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                    <a href="#modal_SearchVehicle" data-toggle="modal" class="btn btn-default">جستجوی وسیله نقلیه</a>
+                    <a href="/Vehicle/SearchVehicle" class="btn btn-default" title="نمایش کل وسایل نقلیه" id="btn_RefreshList"><i class="icon-refresh"></i></a>
+                    <p style="display: inline; margin-right: 20px;">نتایـج :</p>
+                    <p style="display: inline; color: #b32400; margin-right: 5px;">@Model.TotalItemCount &nbsp; از &nbsp; @Model.TotalModelCount</p>
+                </div>
+                <div class="col-lg-2">
+                    <a href="/Vehicle/ExportToExcel" class="btn btn-round btn-danger" id="">خروجـی اکسـل <i class="icon-table"></i></a>
+                </div>
+            </div>
+            @Html.Partial("_VehicleList", Model)
+            <div class="row" id="div_Paging">
+                @Html.Pager(10, Model.CurrentPage, Model.TotalItemCount)
+                <p style="display: inline; margin-right: 20px;">صفحـه :</p>
+                <p style="display: inline; color: #b32400; margin-right: 5px;">@Model.CurrentPage &nbsp; از &nbsp; @Model.TotalPageCount</p>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--search modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_SearchVehicle" class="modal fade">
+    <div class="modal-dialog" style="width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseSearchVehicleModal">×</button>
+                <h4 class="modal-title">جستجوی وسیله نقلیه</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("SearchVehicle", "Vehicle", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        @Html.TextBox("Model", null, new { @class = "form-control", id = "txt_Model", placeholder = "مدل" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("NumberPlates", null, new { @class = "form-control", id = "txt_NumberPlates", placeholder = "شماره پلاک" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("VINName", null, new { @class = "form-control", id = "txt_VINName", placeholder = "نام VIN" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("GroupId", new SelectList(Model.VehicleGroups, "Id", "Name"), "همه ی گروه ها", new { @class = "form-control m-bot15", id = "drp_VehicleGroupId" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("ColorId", new SelectList(Model.Colors, "Id", "Name"), "همه ی رنگ ها", new { @class = "form-control m-bot15", id = "drp_ColorId" })
+                    </div>
+                    <div class="form-group">
+                        <select id="drp_IsHybrid" name="IsHybrid" class="form-control">
+                            <option value="">همه وسایل نقلیه</option>
+                            <option value="0">تک گانه سوز</option>
+                            <option value="1">دوگانه سوز</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="drp_Status" name="Status" class="form-control">
+                            <option value="">همه وضعیت ها</option>
+                            <option value="0">غیرفعال</option>
+                            <option value="1">فعال</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-block" id="btn_Search">جستجو</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search modal -->
+
+@section scripts{
+    <script src="~/Contents/Template/FlatlabRTL/js/form-component.js"></script>
+    <script type="text/javascript">
+        // paging style
+        $("#div_Paging").css('padding', '30px');
+        $("#div_Paging span").css('padding', '10px 15px 10px 15px').css('border', '1px solid #b3b3b3').css('float', 'right');
+        $("#div_Paging a").css('padding', '10px 15px 10px 15px').css('border', '1px solid #b3b3b3').css('float', 'right');
+        $("#div_Paging .current").css('background', '#cccccc');
+        /////////////
+        function deleteVehicle(id) {
+            if (confirm('وسیله نقلیه انتخاب شده حذف می شود. آیا مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/Vehicle/DeleteVehicle",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        eval(result.Script);
+                        if (result.Success) {
+                            window.location = '/Vehicle/Vehicles';
+                        }
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            }
+        }
+        ///////////
+        $("#txt_Model").val('@Session["Vehicle_Model"]');
+        $("#drp_VehicleGroupId").val('@Session["Vehicle_GroupId"]');
+        $("#txt_NumberPlates").val('@Session["Vehicle_NumberPlates"]');
+        $("#txt_VINName").val('@Session["Vehicle_VINName"]');
+        $("#drp_ColorId").val('@Session["Vehicle_ColorId"]');
+        $("#drp_IsHybrid").val('@Session["Vehicle_IsHybrid"]');
+        $("#drp_Status").val('@Session["Vehicle_Status"]');
+    </script>
+}

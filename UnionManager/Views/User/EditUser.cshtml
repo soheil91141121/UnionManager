@@ -1,0 +1,155 @@
+﻿@model UnionManager.ViewModels.User.AddUserViewModel
+@* @using UnionManager.Helpers.Utilities*@
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Contents/persianDatepicker-master/persianDatepicker-master/css/persianDatepicker-default.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li><a href="/User/Users">کاربران</a></li>
+            <li class="active">ویرایش کاربر</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">ویرایش کاربر &nbsp;<span style="color: #a55518; font-style: normal; font-size: 13px;">@Model.User.Username</span></header>
+            <div class="panel-body">
+                @using (Html.BeginForm("EditUser", "User", FormMethod.Post, new { enctype = "multipart/form-data", id = "myUploadForm", autocomplete = "off" }))
+                {
+                    @Html.HiddenFor(model => model.User.Id)
+                    @Html.HiddenFor(model => model.User.Password)
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Name, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.Name, new { @class = "form-control", id = "txt_Name" })
+                        @Html.ValidationMessageFor(model => model.User.Name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Family, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.Family, new { @class = "form-control", id = "txt_Family" })
+                        @Html.ValidationMessageFor(model => model.User.Family)
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.User.RoleId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.User.RoleId, new SelectList(Model.Roles, "Id", "Name"), "نقش کاربر را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_RoleId" })
+                        @Html.ValidationMessageFor(model => model.User.RoleId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.FatherName)
+                        @Html.TextBoxFor(model => model.User.FatherName, new { @class = "form-control", id = "txt_FatherName" })
+                        @Html.ValidationMessageFor(model => model.User.FatherName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Gender)<br />
+                        @Html.RadioButtonFor(model => model.User.Gender, "true") مرد
+                        @Html.RadioButtonFor(model => model.User.Gender, "false") زن
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.NationalCode, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.NationalCode, new { @class = "form-control", id = "txt_NationalCode" })
+                        @Html.ValidationMessageFor(model => model.User.NationalCode)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.IdNo)
+                        @Html.TextBoxFor(model => model.User.IdNo, new { @class = "form-control", id = "txt_IdNo" })
+                        @Html.ValidationMessageFor(model => model.User.IdNo)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.BirthDate)
+                        @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control", id = "txt_BirthDate" })
+                        @Html.ValidationMessageFor(model => model.User.BirthDate)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Mobile)
+                        @Html.TextBoxFor(model => model.User.Mobile, new { @class = "form-control", id = "txt_Mobile" })
+                        @Html.ValidationMessageFor(model => model.User.Mobile)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Tel)
+                        @Html.TextBoxFor(model => model.User.Tel, new { @class = "form-control", id = "txt_Tel" })
+                        @Html.ValidationMessageFor(model => model.User.Tel)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Username, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.Username, new { @class = "form-control", id = "txt_Username" })
+                        @Html.ValidationMessageFor(model => model.User.Username)
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.User.Password, new { @class = "required" })
+                            @Html.PasswordFor(model => model.User.Password, new { @class = "form-control", id = "txt_Password" })
+                            @Html.ValidationMessageFor(model => model.User.Password)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.User.ConfirmPassword, new { @class = "required" })
+                            @Html.PasswordFor(model => model.User.ConfirmPassword, new { @class = "form-control", id = "txt_ConfirmPassword" })
+                            @Html.ValidationMessageFor(model => model.User.ConfirmPassword)
+                        </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Image)
+                        <div id="image-holder">
+                            @Html.ImageFor(model => model.User.Image, new { width = "128" }, "default.png", "Files", "UploadImages")
+                        </div>
+                        @Html.Upload("UploadImage")
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.IsInsuranced)
+                        @Html.CheckBoxFor(model => model.User.IsInsuranced)
+                    </div>
+                    <button type="submit" class="btn btn-success" id="btn_EditUser">ذخیره</button>
+                }
+            </div>
+        </section>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Contents/persianDatepicker-master/persianDatepicker-master/js/persianDatepicker.js"></script>
+    <script>
+        $("#txt_BirthDate").persianDatepicker({
+            cellWidth: 50,
+            cellHeight: 30,
+            fontSize: 12,
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            }
+        });
+
+        var birthDate = $("#txt_BirthDate");
+        if (birthDate.val() != "") {
+            var date = birthDate.val().split(' ')[0];
+            birthDate.val(date);
+        }
+
+        // show image
+        $("#UploadImage").change(function () {
+
+            if (typeof (FileReader) != "undefined") {
+
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("<img />", {
+                        "src": e.target.result,
+                        "width": "128"
+                    }).appendTo(image_holder);
+
+                }
+                image_holder.show();
+                reader.readAsDataURL($(this)[0].files[0]);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,129 @@
+﻿@model UnionManager.ViewModels.Vehicle.AddVehicleViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li><a href="/Vehicle/Vehicles">وسایل نقلیه</a></li>
+            <li class="active">ویرایش وسیله نقلیه</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">ویرایش وسیله نقلیه &nbsp;<span style="color: #a55518; font-style: normal; font-size: 13px;">@Model.Vehicle.Model</span></header>
+            <div class="panel-body">
+                @using (Html.BeginForm("EditVehicle", "Vehicle", FormMethod.Post, new { autocomplete = "off" }))
+                {
+                    @Html.HiddenFor(model => model.Vehicle.Id)
+                    @Html.HiddenFor(model => model.Vehicle.NumberPlates, new { id = "hidden_NumberPlates" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.Model, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Vehicle.Model, new { @class = "form-control", id = "txt_Model" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.Model)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.VehicleGroupId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.Vehicle.VehicleGroupId, new SelectList(Model.VehicleGroups, "Id", "Name"), "گروه وسیله نقلیه را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_VehicleGroupId" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.VehicleGroupId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.NumberPlates, new { @class = "required" })
+                        <div style="height: 42px; border: 1px solid #e2e2e4; border-radius: 4px; direction: ltr; padding: 3px;">
+                            <img src="~/Files/Icons/202px-Non-EU-section-with-IR_svg.jpg" style="height: 32px; width: 4%; margin-bottom: 4px;" />
+                            <input id="txt_FirstNum" type="text" maxlength="2" min="10" required name="np_FirstNum" value="" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 22%; text-align: center;" />
+                            <select id="drp_Letter" required name="np_Letter" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 15%; text-align: center;">
+                                <option value=""></option>
+                                <option value="الف">الف</option>
+                                <option value="ب">ب</option>
+                                <option value="پ">پ</option>
+                                <option value="ت">ت</option>
+                                <option value="ث">ث</option>
+                                <option value="ج">ج</option>
+                                <option value="چ">چ</option>
+                                <option value="ح">ح</option>
+                                <option value="خ">خ</option>
+                                <option value="د">د</option>
+                                <option value="ذ">ذ</option>
+                                <option value="ر">ر</option>
+                                <option value="ز">ز</option>
+                                <option value="ژ">ژ</option>
+                                <option value="س">س</option>
+                                <option value="ش">ش</option>
+                                <option value="ص">ص</option>
+                                <option value="ض">ض</option>
+                                <option value="ط">ط</option>
+                                <option value="ظ">ظ</option>
+                                <option value="ع">ع</option>
+                                <option value="غ">غ</option>
+                                <option value="ف">ف</option>
+                                <option value="ق">ق</option>
+                                <option value="ک">ک</option>
+                                <option value="گ">گ</option>
+                                <option value="ل">ل</option>
+                                <option value="م">م</option>
+                                <option value="ن">ن</option>
+                                <option value="و">و</option>
+                                <option value="ه">ه</option>
+                                <option value="ی">ی</option>
+                            </select>
+                            <input id="txt_SecondNum" type="text" maxlength="3" min="100" required name="np_SecondNum" value="" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 29%; text-align: center;" />
+                            <input id="txt_ThirdNum" type="text" maxlength="2" min="10" required name="np_ThirdNum" value="" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 22%; text-align: center;" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.VINName, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Vehicle.VINName, new { @class = "form-control", id = "txt_VINName" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.VINName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.ColorId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.Vehicle.ColorId, new SelectList(Model.Colors, "Id", "Name"), "رنگ را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_ColorId" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.ColorId)
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(model => model.Vehicle.IsHybrid, new { id = "chbx_IsHybrid" })
+                        @Html.LabelFor(model => model.Vehicle.IsHybrid)
+                    </div>
+                    <button type="submit" class="btn btn-success" id="btn_EditVehicle">ذخیره</button>
+                }
+            </div>
+        </section>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var numberPlates = $("#hidden_NumberPlates").val();
+        if(numberPlates.length <= 9)
+        {
+            var firstNum = numberPlates.substring(0, 2);
+            var letter = numberPlates.substring(2, 3);
+            var secondNum = numberPlates.substring(3, 6);
+            var thirdNum = numberPlates.substring(7, 9);
+            $("#txt_FirstNum").val(firstNum);
+            $("#drp_Letter").val(letter);
+            $("#txt_SecondNum").val(secondNum);
+            $("#txt_ThirdNum").val(thirdNum);
+        }
+        else
+        {
+            var firstNum = numberPlates.substring(0, 2);
+            var letter = numberPlates.substring(2, 5);
+            var secondNum = numberPlates.substring(5, 8);
+            var thirdNum = numberPlates.substring(9, 11);
+            $("#txt_FirstNum").val(firstNum);
+            $("#drp_Letter").val(letter);
+            $("#txt_SecondNum").val(secondNum);
+            $("#txt_ThirdNum").val(thirdNum);
+        }
+    </script>
+}
+

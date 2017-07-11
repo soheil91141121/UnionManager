@@ -1,0 +1,118 @@
+﻿@model UnionManager.ViewModels.Trade.TradeViewModel
+@using MvcPager
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li class="active">اصناف</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">لیست اصناف</header>
+            <div class="row" style="padding: 10px;">
+                <div class="col-lg-10">
+                    @Html.ActionLink("افزودن صنف جدید", "AddTrade", "Trade", null, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                    <a href="#modal_SearchTrade" data-toggle="modal" class="btn btn-default">جستجوی صنف</a>
+                    <a href="/Trade/SearchTrade" class="btn btn-default" title="نمایش کل اصناف" id="btn_RefreshList"><i class="icon-refresh"></i></a>
+                    <p style="display: inline; margin-right: 20px;">نتایـج :</p>
+                    <p style="display: inline; color: #b32400; margin-right: 5px;">@Model.TotalItemCount &nbsp; از &nbsp; @Model.TotalModelCount</p>
+                </div>
+                <div class="col-lg-2">
+                    <a href="/Trade/ExportToExcel" class="btn btn-round btn-danger" id="">خروجـی اکسـل <i class="icon-table"></i></a>
+                </div>
+            </div>
+            @Html.Partial("_TradeList", Model)
+            <div class="row" id="div_Paging">
+                @Html.Pager(10, Model.CurrentPage, Model.TotalItemCount)
+                <p style="display: inline; margin-right: 20px;">صفحـه :</p>
+                <p style="display: inline; color: #b32400; margin-right: 5px;">@Model.CurrentPage &nbsp; از &nbsp; @Model.TotalPageCount</p>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!--search modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_SearchTrade" class="modal fade">
+    <div class="modal-dialog" style="width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseSearchTradeModal">×</button>
+                <h4 class="modal-title">جستجوی صنف</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("SearchTrade", "Trade", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        @Html.TextBox("Name", null, new { @class = "form-control", id = "txt_Name", placeholder = "نام صنف" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("GroupId", new SelectList(Model.TradeGroups, "Id", "Name"), "همه ی گروه ها", new { @class = "form-control m-bot15", id = "drp_TradeGroupId" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("Tel", null, new { @class = "form-control", id = "txt_Tel", placeholder = "تلفن ثابت" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("Address", null, new { @class = "form-control", id = "txt_Address", placeholder = "آدرس" })
+                    </div>
+                    <div class="form-group">
+                        <select id="drp_Status" name="Status" class="form-control">
+                            <option value="">همه وضعیت ها</option>
+                            <option value="0">غیرفعال</option>
+                            <option value="1">فعال</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-block" id="btn_Search">جستجو</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end search modal -->
+
+@section scripts{
+    <script src="~/Contents/Template/FlatlabRTL/js/form-component.js"></script>
+    <script type="text/javascript">
+        // paging style
+        $("#div_Paging").css('padding', '30px');
+        $("#div_Paging span").css('padding', '10px 15px 10px 15px').css('border', '1px solid #b3b3b3').css('float', 'right');
+        $("#div_Paging a").css('padding', '10px 15px 10px 15px').css('border', '1px solid #b3b3b3').css('float', 'right');
+        $("#div_Paging .current").css('background', '#cccccc');
+        /////////////
+        function deleteTrade(id) {
+            if (confirm('صنف انتخاب شده حذف می شود. آیا مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/Trade/DeleteTrade",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        eval(result.Script);
+                        if (result.Success) {
+                            window.location = '/Trade/Trades';
+                        }
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            }
+        }
+
+        ///////////
+        $("#txt_Name").val('@Session["Trade_Name"]');
+        $("#drp_TradeGroupId").val('@Session["Trade_GroupId"]');
+        $("#txt_Tel").val('@Session["Trade_Tel"]');
+        $("#txt_Address").val('@Session["Trade_Address"]');
+        $("#drp_Status").val('@Session["Trade_Status"]');
+    </script>
+}

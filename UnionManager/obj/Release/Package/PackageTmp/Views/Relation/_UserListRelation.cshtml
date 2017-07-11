@@ -1,0 +1,34 @@
+﻿@model UnionManager.ViewModels.Relation.RelationViewModel
+
+<div id="div_Users">
+    <div style="height:350px; overflow-y: scroll">
+        <table class="table table-striped border-top table-hover" id="tbl_Users">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>نام و نام خانوادگی</th>
+                    <th>نقش کاربر</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var counter = 1;
+                    foreach (var item in Model.Users)
+                    {
+                        <tr class="gradeX">
+                            <td>@counter</td>
+                            <td>@item.Name &nbsp; @item.Family</td>
+                            <td>@item.Role.Name</td>
+                            <td>
+                                <button class="btn btn-success btn-xs" onclick="setUserById(@item.Id)" title="افزودن"><i class="icon-plus"></i></button>
+                            </td>
+                        </tr>
+                        counter = counter + 1;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

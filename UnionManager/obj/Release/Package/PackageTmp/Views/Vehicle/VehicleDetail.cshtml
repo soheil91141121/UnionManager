@@ -1,0 +1,136 @@
+﻿@model UnionManager.ViewModels.Vehicle.VehicleDetailViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li><a href="/Vehicle/Vehicles">وسایل نقلیه</a></li>
+            <li class="active">جزئیات وسیله نقلیه</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">جزئیات وسیله نقلیه</header>
+            <div class="panel-body">
+                <div class="row">
+                    <img src="~/Files/Icons/1497336705_car.png" width="128" height="128" style="margin-right: 20px;" />
+                </div>
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>مدل :</p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p style="color: #a55518; font-size: 12px;">@Model.Vehicle.Model</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>نام گروه :</p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p style="color: #a55518; font-size: 12px;">@Model.Vehicle.VehicleGroup.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>شماره پلاک :</p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p style="color: #a55518; font-size: 12px;">@Model.Vehicle.NumberPlates</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>نام VIN :</p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p style="color: #a55518; font-size: 12px;">@Model.Vehicle.VINName</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>رنگ :</p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p style="color: #a55518; font-size: 12px;">@Model.Vehicle.Color.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p>دوگانه سوز :</p>
+                            </div>
+                            <div class="col-lg-8">
+                                <p style="color: #a55518; font-size: 12px;">
+                                    @if (Model.Vehicle.IsHybrid)
+                                    { <text>بله</text> }
+                                    else
+                                    { <text>خیر</text> }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p>کاربران :</p>
+                            </div>
+                            <div class="col-lg-10">
+                                <p style="color: #a55518; font-size: 12px; display: inline;">@Model.UserVehicles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p>اصناف :</p>
+                            </div>
+                            <div class="col-lg-10">
+                                <p style="color: #a55518; font-size: 12px; display: inline;">@Model.VehicleTrades</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="row" style="margin-top: 15px;">
+                    <a href="/Vehicle/Vehicles" style="margin-left: 30px; font-size: 15px; float: left;">لیست وسایل نقلیه</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

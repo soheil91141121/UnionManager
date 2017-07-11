@@ -1,0 +1,794 @@
+﻿@model UnionManager.ViewModels.Relation.RelationViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/Contents/persianDatepicker-master/persianDatepicker-master/css/persianDatepicker-default.css" rel="stylesheet" />
+}
+
+@if (Model.Trade != null)
+{
+    @Html.Hidden("TradeId", Model.Trade.Id, new { id = "hidden_tradeId" })
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li><a href="/Trade/Trades">اصناف</a></li>
+            <li class="active">ثبت صنف</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">جزئیات صنف</header>
+            <div class="row" style="padding: 10px;">
+                <div class="col-lg-12">
+                    <a href="#modal_AddTrade" data-toggle="modal" class="btn btn-default">صنف جدید</a>
+                    <a href="#modal_Trades" data-toggle="modal" class="btn btn-default">انتخاب از صنف های موجود</a>
+                </div>
+            </div>
+            <div class="row" style="padding: 5px 40px 10px 20px">
+                <div class="row">
+                    <div class="col-lg-2">
+                        نام صنف
+                    </div>
+                    <div class="col-lg-10">
+                        <p style="color: #a55518; font-size: 12px;" id="lbl_TradeName">-</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        گروه صنف
+                    </div>
+                    <div class="col-lg-10">
+                        <p style="color: #a55518; font-size: 12px;" id="lbl_TradeGroupName">-</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        شماره تلفن
+                    </div>
+                    <div class="col-lg-10">
+                        <p style="color: #a55518; font-size: 12px;" id="lbl_TradeTel">-</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        آدرس
+                    </div>
+                    <div class="col-lg-10">
+                        <p style="color: #a55518; font-size: 12px;" id="lbl_TradeAddress">-</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@if (Model.Trade != null)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">لیست کاربران و وسایل نقلیه</header>
+                <div class="row" style="padding: 10px;">
+                    <div class="col-lg-12">
+                        <a href="" data-toggle="modal" class="btn btn-default" id="btn_AddUser">کاربر جدید</a>
+                        <a href="" data-toggle="modal" class="btn btn-default" id="btn_SelectUser">انتخاب از کاربران موجود</a>
+                    </div>
+                </div>
+                @Html.Partial("_UserAndVehiclesList", Model)
+            </section>
+        </div>
+    </div>
+}
+
+
+
+<!--trade modal-->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_AddTrade" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseAddTradeModal">×</button>
+                <h4 class="modal-title">افزودن صنف</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddTradeRelation", "Relation", new AjaxOptions { Url = "/Relation/AddTradeRelation", HttpMethod = "Post", OnSuccess = "AddTradeSuccess" }, new { autocomplete = "off" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Name, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Trade.Name, new { @class = "form-control", id = "txt_TradeName", placeholder = "نام صنف را وارد کنید" })
+                        @Html.ValidationMessageFor(model => model.Trade.Name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.TradeGroupId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.Trade.TradeGroupId, new SelectList(Model.TradeGroups, "Id", "Name"), "گروه صنف را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_TradeGroupId" })
+                        @Html.ValidationMessageFor(model => model.Trade.TradeGroupId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Tel, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Trade.Tel, new { @class = "form-control", id = "txt_TradeTel", placeholder = "شماره تلفن را وارد کنید" })
+                        @Html.ValidationMessageFor(model => model.Trade.Tel)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Address, new { @class = "required" })
+                        @Html.TextAreaFor(model => model.Trade.Address, new { @class = "form-control", id = "txt_TradeAddress", placeholder = "آدرس را وارد کنید" })
+                        @Html.ValidationMessageFor(model => model.Trade.Address)
+                    </div>
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_Trades" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="height: 550px;">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseTradesModal">×</button>
+                <h4 class="modal-title">لیست اصناف</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Name, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            <input type="text" class="form-control" id="txt_TradeNameSearch" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.TradeGroupId, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.DropDownList("group", new SelectList(Model.TradeGroups, "Id", "Name"), "همه ی اصناف", new { @class = "form-control m-bot15", id = "drp_TradeGroupIdSearch" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.Partial("_TradeListRelation", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end trade modal-->
+<!--user modal-->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_AddUser" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseAddUserModal">×</button>
+                <h4 class="modal-title">افزودن کاربر</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddUserRelation", "Relation", null, new AjaxOptions { Url = "/Relation/AddUserRelation", HttpMethod = "Post", OnSuccess = "AddUserSuccess" }, new { id = "frm_AddUser", autocomplete = "off" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Name, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.Name, new { @class = "form-control", id = "txt_UserName" })
+                        @Html.ValidationMessageFor(model => model.User.Name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Family, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.Family, new { @class = "form-control", id = "txt_UserFamily" })
+                        @Html.ValidationMessageFor(model => model.User.Family)
+                    </div>
+                    <div>
+                        @Html.LabelFor(model => model.User.RoleId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.User.RoleId, new SelectList(Model.Roles, "Id", "Name"), "نقش کاربر را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_RoleId" })
+                        @Html.ValidationMessageFor(model => model.User.RoleId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.FatherName)
+                        @Html.TextBoxFor(model => model.User.FatherName, new { @class = "form-control", id = "txt_UserFatherName" })
+                        @Html.ValidationMessageFor(model => model.User.FatherName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Gender)<br />
+                        @Html.RadioButtonFor(model => model.User.Gender, "true") مرد
+                        @Html.RadioButtonFor(model => model.User.Gender, "false") زن
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.NationalCode, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.NationalCode, new { @class = "form-control", id = "txt_UserNationalCode" })
+                        @Html.ValidationMessageFor(model => model.User.NationalCode)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.IdNo)
+                        @Html.TextBoxFor(model => model.User.IdNo, new { @class = "form-control", id = "txt_UserIdNo" })
+                        @Html.ValidationMessageFor(model => model.User.IdNo)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.BirthDate)
+                        @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control birthDate", id = "txt_UserBirthDate" })
+                        @Html.ValidationMessageFor(model => model.User.BirthDate)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Mobile)
+                        @Html.TextBoxFor(model => model.User.Mobile, new { @class = "form-control", id = "txt_UserMobile" })
+                        @Html.ValidationMessageFor(model => model.User.Mobile)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Tel)
+                        @Html.TextBoxFor(model => model.User.Tel, new { @class = "form-control", id = "txt_UserTel" })
+                        @Html.ValidationMessageFor(model => model.User.Tel)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Username, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.User.Username, new { @class = "form-control", id = "txt_UserUsername" })
+                        @Html.ValidationMessageFor(model => model.User.Username)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Password, new { @class = "required" })
+                        @Html.PasswordFor(model => model.User.Password, new { @class = "form-control", id = "txt_UserPassword" })
+                        @Html.ValidationMessageFor(model => model.User.Password)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.ConfirmPassword, new { @class = "required" })
+                        @Html.PasswordFor(model => model.User.ConfirmPassword, new { @class = "form-control", id = "txt_UserConfirmPassword" })
+                        @Html.ValidationMessageFor(model => model.User.ConfirmPassword)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Image)
+                        <div id="image-holder"></div>
+                        @Html.Upload("UploadImage", new { id = "UploadImage" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.IsInsuranced)
+                        @Html.CheckBoxFor(model => model.User.IsInsuranced)
+                    </div>
+                    <button type="submit" class="btn btn-success">ذخیره</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_Users" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="height: 550px;">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseUsersModal">×</button>
+                <h4 class="modal-title">لیست کاربران</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Name, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.User.Name, new { @class = "form-control", id = "txt_UserNameSearch" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.RoleId, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.DropDownListFor(model => model.User.RoleId, new SelectList(Model.Roles, "Id", "Name"), "همه ی نقش ها", new { @class = "form-control m-bot15", id = "drp_RoleIdSearch" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.Partial("_UserListRelation", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end user modal-->
+<!--vehicle modal-->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_AddVehicle" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseAddVehicleModal">×</button>
+                <h4 class="modal-title">افزودن وسیله نقلیه</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddVehicleRelation", "Relation", null, new AjaxOptions { Url = "/Relation/AddVehicleRelation", HttpMethod = "Post", OnSuccess = "AddVehicleSuccess" }, new { id = "frm_AddVehicle", autocomplete = "off" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.Model, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Vehicle.Model, new { @class = "form-control", id = "txt_VehicleModel" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.Model)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.VehicleGroupId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.Vehicle.VehicleGroupId, new SelectList(Model.VehicleGroups, "Id", "Name"), "گروه وسیله نقلیه را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_VehicleGroupId" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.VehicleGroupId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.NumberPlates, new { @class = "required" })
+                        <div style="height: 42px; border: 1px solid #e2e2e4; border-radius: 4px; direction: ltr; padding: 3px;">
+                            <img src="~/Files/Icons/202px-Non-EU-section-with-IR_svg.jpg" style="height: 32px; width: 4%; margin-bottom: 4px;" />
+                            <input type="text" maxlength="2" min="10" required name="np_FirstNum" value="" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 22%; text-align: center;" />
+                            <select required name="np_Letter" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 15%; text-align: center;">
+                                <option value=""></option>
+                                <option value="الف">الف</option>
+                                <option value="ب">ب</option>
+                                <option value="پ">پ</option>
+                                <option value="ت">ت</option>
+                                <option value="ث">ث</option>
+                                <option value="ج">ج</option>
+                                <option value="چ">چ</option>
+                                <option value="ح">ح</option>
+                                <option value="خ">خ</option>
+                                <option value="د">د</option>
+                                <option value="ذ">ذ</option>
+                                <option value="ر">ر</option>
+                                <option value="ز">ز</option>
+                                <option value="ژ">ژ</option>
+                                <option value="س">س</option>
+                                <option value="ش">ش</option>
+                                <option value="ص">ص</option>
+                                <option value="ض">ض</option>
+                                <option value="ط">ط</option>
+                                <option value="ظ">ظ</option>
+                                <option value="ع">ع</option>
+                                <option value="غ">غ</option>
+                                <option value="ف">ف</option>
+                                <option value="ق">ق</option>
+                                <option value="ک">ک</option>
+                                <option value="گ">گ</option>
+                                <option value="ل">ل</option>
+                                <option value="م">م</option>
+                                <option value="ن">ن</option>
+                                <option value="و">و</option>
+                                <option value="ه">ه</option>
+                                <option value="ی">ی</option>
+                            </select>
+                            <input type="text" maxlength="3" min="100" required name="np_SecondNum" value="" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 29%; text-align: center;" />
+                            <input type="text" maxlength="2" min="10" required name="np_ThirdNum" value="" style="color: #909090; outline: none; margin-left: 1%; border: 1px solid #e2e2e4; border-radius: 4px; height: 34px; width: 22%; text-align: center;" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.VINName, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Vehicle.VINName, new { @class = "form-control", id = "txt_VehicleVINName" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.VINName)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.ColorId, new { @class = "required" })
+                        @Html.DropDownListFor(model => model.Vehicle.ColorId, new SelectList(Model.Colors, "Id", "Name"), "رنگ را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_ColorId" })
+                        @Html.ValidationMessageFor(model => model.Vehicle.ColorId)
+                    </div>
+                    <div class="form-group">
+                        @Html.CheckBoxFor(model => model.Vehicle.IsHybrid, new { id = "chbx_VehicleIsHybrid" })
+                        @Html.LabelFor(model => model.Vehicle.IsHybrid)
+                    </div>
+                    <button type="submit" class="btn btn-success" id="btn_AddVehicle">ذخیره</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="modal_Vehicles" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content" style="height: 550px;">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button" id="btn_CloseVehiclesModal">×</button>
+                <h4 class="modal-title">لیست وسایل نقلیه</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.Model, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.TextBoxFor(model => model.Vehicle.Model, new { @class = "form-control", id = "txt_VehicleModelSearch" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Vehicle.VehicleGroupId, new { @class = "col-lg-2 control-label" })
+                        <div class="col-lg-6">
+                            @Html.DropDownListFor(model => model.Vehicle.VehicleGroupId, new SelectList(Model.VehicleGroups, "Id", "Name"), "همه ی وسایل نقلیه", new { @class = "form-control m-bot15", id = "drp_VehicleGroupIdSearch" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        @Html.Partial("_VehicleListRelation", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end vehicle modal-->
+
+@section scripts{
+    <script src="~/Contents/persianDatepicker-master/persianDatepicker-master/js/persianDatepicker.js"></script>
+
+    <script>
+        var relationId = null;
+
+        var tradeId = null;
+        if ($("#hidden_tradeId").val()) {
+            tradeId = $("#hidden_tradeId").val()
+            getTradeById(tradeId);
+        }
+
+        ///////////////////////////birthDate
+        $("#txt_UserBirthDate").persianDatepicker({
+            cellWidth: 50,
+            cellHeight: 30,
+            fontSize: 12,
+            calendarPosition: {
+                x: 0,
+                y: 0,
+            }
+        });
+
+        // show image
+        $("#UploadImage").change(function (e) {
+            var filename = $("#UploadImage").val().split('\\').pop();
+            var extension = filename.split('.').pop();
+            if (extension == "png" || extension == "jpg" || extension == "gif" || extension == "bmp") {
+                var fileSize = $("#UploadImage")[0].files[0].size;
+                if (fileSize < 2000001) {
+                    if (typeof (FileReader) != "undefined") {
+                        var image_holder = $("#image-holder");
+                        image_holder.empty();
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $("<img />", {
+                                "src": e.target.result,
+                                "width": "128"
+                            }).appendTo(image_holder);
+                        }
+                        image_holder.show();
+                        reader.readAsDataURL($(this)[0].files[0]);
+                    }
+                }
+                else {
+                    var image_holder = $("#image-holder");
+                    image_holder.empty();
+                    $("#UploadImage").val('');
+                    alert("حجم فایل تصویر باید کمتر از 2 مگابایت باشد");
+                }
+            }
+            else {
+                var image_holder = $("#image-holder");
+                image_holder.empty();
+                $("#UploadImage").val('');
+                alert("فایل تصویر معتبر نیست");
+            }
+        });
+
+        //------------------------------------------- trade ----------------------------------------------
+        $("#txt_TradeName").val('');
+        $("#drp_TradeGroupId").val('');
+        $("#txt_TradeTel").val('');
+        $("#txt_TradeAddress").val('');
+
+        function getTradeById(id) {
+            $.ajax({
+                url: "/Relation/GetTradeById",
+                data: { id: id },
+                type: "Post",
+                datatype: "Json",
+                success: function (result) {
+                    tradeId = result.id;
+                    $("#lbl_TradeName").text(result.name);
+                    $("#lbl_TradeGroupName").text(result.groupName);
+                    $("#lbl_TradeTel").text(result.tel);
+                    $("#lbl_TradeAddress").text(result.address);
+                    $("#btn_CloseTradesModal").click();
+                },
+                error: function () {
+                    alert("خطا!");
+                }
+            });
+        }
+
+        function AddTradeSuccess(data) {
+            if (data.Success) {
+                eval(data.Script);
+                window.location = '/Relation/Relation?tradeId=' + data.Id;
+            }
+            else {
+                eval(data.Script);
+            }
+        }
+
+        function setTradeById(id) {
+            window.location = '/Relation/Relation?tradeId=' + id;
+        }
+
+        function searchTrade() {
+            var name = $("#txt_TradeNameSearch").val();
+            var groupId = $("#drp_TradeGroupIdSearch").val();
+            $.ajax({
+                url: "/Relation/SearchTradeRelation",
+                data: { name: name, groupId: groupId },
+                type: "Post",
+                datatype: "Json",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#div_Trades").html(data.Html);
+                    }
+                    eval(data.Script);
+                },
+                error: function () {
+                    alert('خطا!');
+                }
+            });
+        }
+
+        $("#txt_TradeNameSearch").keyup(function () {
+            searchTrade();
+        });
+
+        $("#drp_TradeGroupIdSearch").change(function () {
+            searchTrade();
+        });
+
+        //------------------------------------------- user ----------------------------------------------
+        $("#btn_AddUser").click(function () {
+            if (tradeId != null) {
+                $("#btn_AddUser").attr('href', '#modal_AddUser');
+            }
+            else {
+                alert("صنف را مشخص کنید");
+            }
+        });
+
+        $("#btn_SelectUser").click(function () {
+            if (tradeId != null) {
+                $("#btn_SelectUser").attr('href', '#modal_Users');
+            }
+            else {
+                alert("صنف را مشخص کنید");
+            }
+        });
+
+        function AddUserSuccess(data) {
+            if (data.Success) {
+                var userId = data.UserId;
+                $.ajax({
+                    url: "/Relation/AddRelationForUser",
+                    data: { userId: userId, tradeId: tradeId },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            uploadImage();
+                        }
+                        else {
+                            eval(result.Script);
+                        }
+                    },
+                    error: function () {
+                        alert('خطا!');
+                    }
+                });
+            }
+            else {
+                eval(data.Script);
+            }
+        }
+
+        function uploadImage() {
+            var formData = new FormData();
+            var totalFiles = document.getElementById("UploadImage").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("UploadImage").files[i];
+
+                formData.append("UploadImage", file);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '/Relation/UploadUserImage',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (result) {
+                    if (result.Success) {
+                        eval(result.Script);
+                        window.location = '/Relation/Relation?tradeId=' + tradeId;
+                    }
+                    else {
+                        eval(result.Script);
+                    }
+                },
+                error: function () {
+                    alert('خطا!');
+                }
+            });
+        }
+
+        function searchUser() {
+            var name = $("#txt_UserNameSearch").val();
+            var roleId = $("#drp_RoleIdSearch").val();
+            $.ajax({
+                url: "/Relation/SearchUserRelation",
+                data: { name: name, roleId: roleId },
+                type: "Post",
+                datatype: "Json",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#div_Users").html(data.Html);
+                    }
+                    eval(data.Script);
+                },
+                error: function () {
+                    alert('خطا!');
+                }
+            });
+        }
+
+        function setUserById(id) {
+            $.ajax({
+                url: "/Relation/AddRelationForUserById",
+                data: { userId: id, tradeId: tradeId },
+                type: "Post",
+                datatype: "Json",
+                success: function (result) {
+                    if (result.Success) {
+                        eval(result.Script);
+                        window.location = '/Relation/Relation?tradeId=' + tradeId;
+                    }
+                    else {
+                        eval(result.Script);
+                    }
+                },
+                error: function () {
+                    alert('خطا!');
+                }
+            });
+        }
+
+        $("#txt_UserNameSearch").keyup(function () {
+            searchUser();
+        });
+
+        $("#drp_RoleIdSearch").change(function () {
+            searchUser();
+        });
+
+        //------------------------------------------- vehicle ----------------------------------------------
+        function setRelationIdForAddingVehicle(id) {
+            relationId = id;
+        }
+
+        function AddVehicleSuccess(data) {
+            if (data.Success) {
+                var vehicleId = data.VehicleId;
+                $.ajax({
+                    url: "/Relation/AddRelationForVehicle",
+                    data: { vehicleId: vehicleId, relationId: relationId },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            eval(result.Script);
+                            window.location = '/Relation/Relation?tradeId=' + tradeId;
+                        }
+                        else {
+                            eval(result.Script);
+                        }
+                    },
+                    error: function () {
+                        alert('خطا!');
+                    }
+                });
+            }
+            else {
+                eval(data.Script);
+            }
+        }
+
+        function searchVehicle() {
+            var mdl = $("#txt_VehicleModelSearch").val();
+            var groupId = $("#drp_VehicleGroupIdSearch").val();
+            $.ajax({
+                url: "/Relation/SearchVehicleRelation",
+                data: { mdl: mdl, groupId: groupId },
+                type: "Post",
+                datatype: "Json",
+                success: function (data) {
+                    if (data.Success) {
+                        $("#div_Vehicles").html(data.Html);
+                    }
+                    eval(data.Script);
+                },
+                error: function () {
+                    alert('خطا!');
+                }
+            });
+        }
+
+        function setVehicleById(id) {
+            $.ajax({
+                url: "/Relation/AddRelationForVehicleById",
+                data: { vehicleId: id, relationId: relationId },
+                type: "Post",
+                datatype: "Json",
+                success: function (result) {
+                    if (result.Success) {
+                        eval(result.Script);
+                        window.location = '/Relation/Relation?tradeId=' + tradeId;
+                    }
+                    else {
+                        eval(result.Script);
+                    }
+                },
+                error: function () {
+                    alert('خطا!');
+                }
+            });
+        }
+
+        function resetVehicle(id) {
+            if (confirm('وسیله نقلیه مورد نظر از صنف حذف می شود. مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/Relation/ResetVehicle",
+                    data: { relationId: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            eval(result.Script);
+                            window.location = '/Relation/Relation?tradeId=' + tradeId;
+                        }
+                        else {
+                            eval(result.Script);
+                        }
+                    },
+                    error: function () {
+                        alert('خطا!');
+                    }
+                });
+            }
+        }
+
+        $("#txt_VehicleModelSearch").keyup(function () {
+            searchVehicle();
+        });
+
+        $("#drp_VehicleGroupIdSearch").change(function () {
+            searchVehicle();
+        });
+
+        //------------------------------------------- relation ----------------------------------------------
+        function deleteRelation(id) {
+            if (confirm('رکورد مورد نظر حذف می شود. مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/Relation/DeleteRelation",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        if (result.Success) {
+                            eval(result.Script);
+                            window.location = '/Relation/Relation?tradeId=' + tradeId;
+                        }
+                        else {
+                            eval(result.Script);
+                        }
+                    },
+                    error: function () {
+                        alert('خطا!');
+                    }
+                });
+            }
+        }
+    </script>
+}
+

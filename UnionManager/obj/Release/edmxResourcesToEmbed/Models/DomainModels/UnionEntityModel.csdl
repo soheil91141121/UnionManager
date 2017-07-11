@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_UnionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="db_UnionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="db_UnionModel.Activity" />
+    <EntitySet Name="ActivityTypes" EntityType="db_UnionModel.ActivityType" />
+    <EntitySet Name="Colors" EntityType="db_UnionModel.Color" />
+    <EntitySet Name="Relations" EntityType="db_UnionModel.Relation" />
+    <EntitySet Name="Roles" EntityType="db_UnionModel.Role" />
+    <EntitySet Name="TradeGroups" EntityType="db_UnionModel.TradeGroup" />
+    <EntitySet Name="Trades" EntityType="db_UnionModel.Trade" />
+    <EntitySet Name="Users" EntityType="db_UnionModel.User" />
+    <EntitySet Name="VehicleGroups" EntityType="db_UnionModel.VehicleGroup" />
+    <EntitySet Name="Vehicles" EntityType="db_UnionModel.Vehicle" />
+    <AssociationSet Name="FK_Activity_ActivityType" Association="db_UnionModel.FK_Activity_ActivityType">
+      <End Role="ActivityType" EntitySet="ActivityTypes" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_Users" Association="db_UnionModel.FK_Activity_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vehicles_Colors" Association="db_UnionModel.FK_Vehicles_Colors">
+      <End Role="Color" EntitySet="Colors" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relations_Trades" Association="db_UnionModel.FK_Relations_Trades">
+      <End Role="Trade" EntitySet="Trades" />
+      <End Role="Relation" EntitySet="Relations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relations_Users" Association="db_UnionModel.FK_Relations_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Relation" EntitySet="Relations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Relations_Vehicles" Association="db_UnionModel.FK_Relations_Vehicles">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="Relation" EntitySet="Relations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="db_UnionModel.FK_Users_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trades_TradeGroups" Association="db_UnionModel.FK_Trades_TradeGroups">
+      <End Role="TradeGroup" EntitySet="TradeGroups" />
+      <End Role="Trade" EntitySet="Trades" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Vehicles_VehicleGroups" Association="db_UnionModel.FK_Vehicles_VehicleGroups">
+      <End Role="VehicleGroup" EntitySet="VehicleGroups" />
+      <End Role="Vehicle" EntitySet="Vehicles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Describtion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DeviceType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserId" Type="Int64" Nullable="false" />
+    <Property Name="ActivityTypeId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="ActivityType" Relationship="db_UnionModel.FK_Activity_ActivityType" FromRole="Activity" ToRole="ActivityType" />
+    <NavigationProperty Name="User" Relationship="db_UnionModel.FK_Activity_Users" FromRole="Activity" ToRole="User" />
+  </EntityType>
+  <EntityType Name="ActivityType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Activities" Relationship="db_UnionModel.FK_Activity_ActivityType" FromRole="ActivityType" ToRole="Activity" />
+  </EntityType>
+  <EntityType Name="Color">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Vehicles" Relationship="db_UnionModel.FK_Vehicles_Colors" FromRole="Color" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="Relation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TradeId" Type="Int64" Nullable="false" />
+    <Property Name="UserId" Type="Int64" Nullable="false" />
+    <Property Name="VehicleId" Type="Int64" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Trade" Relationship="db_UnionModel.FK_Relations_Trades" FromRole="Relation" ToRole="Trade" />
+    <NavigationProperty Name="User" Relationship="db_UnionModel.FK_Relations_Users" FromRole="Relation" ToRole="User" />
+    <NavigationProperty Name="Vehicle" Relationship="db_UnionModel.FK_Relations_Vehicles" FromRole="Relation" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="db_UnionModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="TradeGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Trades" Relationship="db_UnionModel.FK_Trades_TradeGroups" FromRole="TradeGroup" ToRole="Trade" />
+  </EntityType>
+  <EntityType Name="Trade">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TradeGroupId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Relations" Relationship="db_UnionModel.FK_Relations_Trades" FromRole="Trade" ToRole="Relation" />
+    <NavigationProperty Name="TradeGroup" Relationship="db_UnionModel.FK_Trades_TradeGroups" FromRole="Trade" ToRole="TradeGroup" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Family" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Boolean" Nullable="false" />
+    <Property Name="NationalCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="IdNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Precision="3" />
+    <Property Name="Mobile" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Tel" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="Int64" Nullable="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsInsuranced" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Activities" Relationship="db_UnionModel.FK_Activity_Users" FromRole="User" ToRole="Activity" />
+    <NavigationProperty Name="Relations" Relationship="db_UnionModel.FK_Relations_Users" FromRole="User" ToRole="Relation" />
+    <NavigationProperty Name="Role" Relationship="db_UnionModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="VehicleGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Vehicles" Relationship="db_UnionModel.FK_Vehicles_VehicleGroups" FromRole="VehicleGroup" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NumberPlates" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ColorId" Type="Int64" Nullable="false" />
+    <Property Name="VINName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsHybrid" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleGroupId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Color" Relationship="db_UnionModel.FK_Vehicles_Colors" FromRole="Vehicle" ToRole="Color" />
+    <NavigationProperty Name="Relations" Relationship="db_UnionModel.FK_Relations_Vehicles" FromRole="Vehicle" ToRole="Relation" />
+    <NavigationProperty Name="VehicleGroup" Relationship="db_UnionModel.FK_Vehicles_VehicleGroups" FromRole="Vehicle" ToRole="VehicleGroup" />
+  </EntityType>
+  <Association Name="FK_Activity_ActivityType">
+    <End Type="db_UnionModel.ActivityType" Role="ActivityType" Multiplicity="1" />
+    <End Type="db_UnionModel.Activity" Role="Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActivityType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="ActivityTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_Users">
+    <End Type="db_UnionModel.User" Role="User" Multiplicity="1" />
+    <End Type="db_UnionModel.Activity" Role="Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vehicles_Colors">
+    <End Type="db_UnionModel.Color" Role="Color" Multiplicity="1" />
+    <End Type="db_UnionModel.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Color">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="ColorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relations_Trades">
+    <End Type="db_UnionModel.Trade" Role="Trade" Multiplicity="1" />
+    <End Type="db_UnionModel.Relation" Role="Relation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relation">
+        <PropertyRef Name="TradeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relations_Users">
+    <End Type="db_UnionModel.User" Role="User" Multiplicity="1" />
+    <End Type="db_UnionModel.Relation" Role="Relation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Relations_Vehicles">
+    <End Type="db_UnionModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+    <End Type="db_UnionModel.Relation" Role="Relation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Relation">
+        <PropertyRef Name="VehicleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Type="db_UnionModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="db_UnionModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trades_TradeGroups">
+    <End Type="db_UnionModel.TradeGroup" Role="TradeGroup" Multiplicity="1" />
+    <End Type="db_UnionModel.Trade" Role="Trade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Trade">
+        <PropertyRef Name="TradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Vehicles_VehicleGroups">
+    <End Type="db_UnionModel.VehicleGroup" Role="VehicleGroup" Multiplicity="1" />
+    <End Type="db_UnionModel.Vehicle" Role="Vehicle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VehicleGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Vehicle">
+        <PropertyRef Name="VehicleGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,51 @@
+﻿@model UnionManager.ViewModels.Relation.RelationViewModel
+
+<div id="div_UsersAndVehicles">
+    <table class="table table-striped border-top table-hover" id="tbl_UsersAndVehicles">
+        <thead>
+            <tr>
+                <th class="hidden-phone">#</th>
+                <th class="hidden-phone">نام و نام خانوادگی</th>
+                <th class="hidden-phone">نقش کاربر</th>
+                <th>نام کاربری</th>
+                <th class="hidden-phone">مدل وسیله نقلیه</th>
+                <th>شماره پلاک</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var counter = 1;
+                foreach (var item in Model.Relations)
+                {
+                    <tr class="odd gradeX">
+                        <td class="hidden-phone">@counter</td>
+                        <td class="hidden-phone">@item.User.Name &nbsp; @item.User.Family</td>
+                        <td class="hidden-phone">@item.User.Role.Name</td>
+                        <td>@item.User.Username</td>
+
+                        @if (item.VehicleId != null)
+                        {
+                            <td class="hidden-phone" style="background: #ffe6ff">@item.Vehicle.Model</td>
+                            <td style="background: #ffe6ff">@item.Vehicle.NumberPlates</td>
+                        }
+                        else
+                        {
+                            <td class="hidden-phone" style="background: #ffe6ff">-</td>
+                            <td style="background: #ffe6ff">-</td>
+                        }
+                        <td>
+                            <a href="#modal_AddVehicle" data-toggle="modal" class="btn btn-success btn-xs" onclick="setRelationIdForAddingVehicle(@item.Id)" title="افزودن وسیله نقلیه"><i class="icon-ambulance"></i></a>
+                            <a href="#modal_Vehicles" data-toggle="modal" class="btn btn-info btn-xs" onclick="setRelationIdForAddingVehicle(@item.Id)" title="انتخاب وسیله نقلیه"><i class="icon-truck"></i></a>
+                            <button type="button" class="btn btn-warning btn-xs" onclick="resetVehicle(@item.Id)" title="حذف وسیله نقلیه"><i class="icon-remove"></i></button>
+                            <button type="button" class="btn btn-danger btn-xs" onclick="deleteRelation(@item.Id)" title="حذف"><i class="icon-trash"></i></button>
+                        </td>
+                    </tr>
+                    counter = counter + 1;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+

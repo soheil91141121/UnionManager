@@ -1,0 +1,34 @@
+﻿@model UnionManager.ViewModels.Relation.RelationViewModel
+
+<div id="div_Trades">
+    <div style="height:350px; overflow-y: scroll">
+        <table class="table table-striped border-top table-hover" id="tbl_Trades">
+            <thead>
+                <tr>
+                    <th class="hidden-phone">#</th>
+                    <th>نام صنف</th>
+                    <th>گروه صنف</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var counter = 1;
+                    foreach (var item in Model.Trades)
+                    {
+                        <tr class="gradeX">
+                            <td>@counter</td>
+                            <td>@item.Name</td>
+                            <td>@item.TradeGroup.Name</td>
+                            <td>
+                                <button class="btn btn-success btn-xs" onclick="setTradeById(@item.Id)" title="انتخاب"><i class="icon-ok"></i></button>
+                            </td>
+                        </tr>
+                        counter = counter + 1;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

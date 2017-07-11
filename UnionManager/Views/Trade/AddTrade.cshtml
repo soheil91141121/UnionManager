@@ -1,0 +1,53 @@
+﻿@model UnionManager.ViewModels.Trade.AddTradeViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li><a href="/Trade/Trades">اصناف</a></li>
+            <li class="active">افزودن صنف</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">
+                افزودن صنف
+            </header>
+            <div class="panel-body">
+                @using (Html.BeginForm("AddTrade", "Trade", FormMethod.Post, new { autocomplete = "off" }))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Name, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.Trade.Name, new { @class = "form-control", id = "txt_Name", placeholder = "نام صنف را وارد کنید" })
+                        @Html.ValidationMessageFor(model => model.Trade.Name)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.TradeGroupId, new { @class = "required" }) 
+                        @Html.DropDownListFor(model => model.Trade.TradeGroupId, new SelectList(Model.TradeGroups, "Id", "Name"), "گروه صنف را انتخاب کنید", new { @class = "form-control m-bot15", id = "drp_TradeGroupId" })
+                        @Html.ValidationMessageFor(model => model.Trade.TradeGroupId)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Tel, new { @class = "required" }) 
+                        @Html.TextBoxFor(model => model.Trade.Tel, new { @class = "form-control", id = "txt_Tel", placeholder = "شماره تلفن را وارد کنید" })
+                        @Html.ValidationMessageFor(model => model.Trade.Tel)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Trade.Address, new { @class = "required" }) 
+                        @Html.TextAreaFor(model => model.Trade.Address, new { @class = "form-control", id = "txt_Address", placeholder = "آدرس را وارد کنید" })
+                        @Html.ValidationMessageFor(model => model.Trade.Address)
+                    </div>
+                    <button type="submit" class="btn btn-success" id="btn_AddTrade">ذخیره</button>
+                }
+            </div>
+        </section>
+    </div>
+</div>
+

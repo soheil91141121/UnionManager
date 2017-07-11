@@ -1,0 +1,46 @@
+﻿@model UnionManager.ViewModels.Vehicle.VehicleViewModel
+
+<div id="div_Vehicles">
+    <table class="table table-striped border-top table-hover" id="sample_1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>مدل</th>
+                <th class="hidden-phone">گروه</th>
+                <th class="hidden-phone">شماره پلاک</th>
+                <th class="hidden-phone">رنگ</th>
+                <th class="hidden-phone">وضعیت</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var counter = ((Model.CurrentPage - 1) * 10) + 1;
+                foreach (var item in Model.Vehicles)
+                {
+                    <tr class="odd gradeX">
+                        <td>@counter</td>
+                        <td>@item.Model</td>
+                        <td class="hidden-phone">@item.VehicleGroup.Name</td>
+                        <td class="hidden-phone">@item.NumberPlates</td>
+                        <td class="hidden-phone">@item.Color.Name</td>
+                        @if (@item.Status == "فعال")
+                        {
+                            <td class="hidden-phone"><span class="label label-success">فعال</span></td>
+                        }
+                        else
+                        {
+                            <td class="hidden-phone"><span class="label label-danger">غیر فعال</span></td>
+                        }
+                        <td>
+                            <a href="@Url.Action("EditVehicle", "Vehicle", new { id = @item.Id })" class="btn btn-primary btn-xs" title="ویرایش"><i class="icon-pencil"></i></a>
+                            <button class="btn btn-danger btn-xs" onclick="deleteVehicle(@item.Id)" title="حذف"><i class="icon-trash"></i></button>
+                            <a href="@Url.Action("VehicleDetail", "Vehicle", new { id = @item.Id })" class="btn btn-default btn-xs" title="جزئیات"><i class="icon-eye-open"></i></a>
+                        </td>
+                    </tr>
+                    counter = counter + 1;
+                }
+            }
+        </tbody>
+    </table>
+</div>

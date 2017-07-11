@@ -1,0 +1,116 @@
+﻿@model UnionManager.ViewModels.GroupAndColor.GroupViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li class="active">گروه ها و رنگ ها</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">گروه های صنف</header>
+            <div class="row" style="padding: 10px;">
+                <div class="col-lg-6">
+                    @Html.ActionLink("افزودن گروه صنف جدید", "AddTradeGroup", "GroupAndColor", null, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                </div>
+            </div>
+            @Html.Partial("_TradeGroupList", Model)
+        </section>
+        <section class="panel">
+            <header class="panel-heading">گروه های وسیله نقلیه</header>
+            <div class="row" style="padding: 10px;">
+                <div class="col-lg-6">
+                    @Html.ActionLink("افزودن گروه وسیله نقلیه جدید", "AddVehicleGroup", "GroupAndColor", null, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                </div>
+            </div>
+            @Html.Partial("_VehicleGroupList", Model)
+        </section>
+    </div>
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">رنگ ها</header>
+            <div class="row" style="padding: 10px;">
+                <div class="col-lg-6">
+                    @Html.ActionLink("افزودن رنگ جدید", "AddColor", "GroupAndColor", null, new { @class = "btn btn-default", style = "margin-right: 10px;" })
+                </div>
+            </div>
+            @Html.Partial("_ColorList", Model)
+        </section>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Contents/Template/FlatlabRTL/js/form-component.js"></script>
+    <script type="text/javascript">
+
+        function deleteTradeGroup(id) {
+            if (confirm('گروه صنف انتخاب شده حذف می شود. آیا مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/GroupAndColor/DeleteTradeGroup",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        eval(result.Script);
+                        if (result.Success) {
+                            window.location = '/GroupAndColor/Groups';
+                        }
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            }
+        }
+
+        function deleteVehicleGroup(id) {
+            if (confirm('گروه وسیله نقلیه انتخاب شده حذف می شود. آیا مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/GroupAndColor/DeleteVehicleGroup",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        eval(result.Script);
+                        if (result.Success) {
+                            window.location = '/GroupAndColor/Groups';
+                        }
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            }
+        }
+
+        function deleteColor(id) {
+            if (confirm('رنگ انتخاب شده حذف می شود. آیا مطمئن هستید؟')) {
+                $.ajax({
+                    url: "/GroupAndColor/DeleteColor",
+                    data: { id: id },
+                    type: "Post",
+                    datatype: "Json",
+                    success: function (result) {
+                        eval(result.Script);
+                        if (result.Success) {
+                            window.location = '/GroupAndColor/Groups';
+                        }
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+

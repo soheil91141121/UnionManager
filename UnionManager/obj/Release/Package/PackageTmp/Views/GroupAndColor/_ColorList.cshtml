@@ -1,0 +1,39 @@
+﻿@model UnionManager.ViewModels.GroupAndColor.GroupViewModel
+
+<div id="div_Colors">
+    <table class="table table-striped border-top table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>نام رنگ</th>
+                <th>وضعیت</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var counter = 1;
+                foreach (var item in Model.Colors)
+                {
+                    <tr class="odd gradeX">
+                        <td>@counter</td>
+                        <td>@item.Name</td>
+                        @if (@item.Status == "فعال")
+                        {
+                            <td><span class="label label-success">فعال</span></td>
+                        }
+                        else
+                        {
+                            <td><span class="label label-danger">غیر فعال</span></td>
+                        }
+                        <td>
+                            <a href="@Url.Action("EditColor", "GroupAndColor", new { id = @item.Id })" class="btn btn-primary btn-xs" title="ویرایش"><i class="icon-pencil"></i></a>
+                            <button class="btn btn-danger btn-xs" onclick="deleteColor(@item.Id)" title="حذف"><i class="icon-trash"></i></button>
+                        </td>
+                    </tr>
+                    counter = counter + 1;
+                }
+            }
+        </tbody>
+    </table>
+</div>

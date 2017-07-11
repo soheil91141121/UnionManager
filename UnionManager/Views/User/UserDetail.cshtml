@@ -1,0 +1,269 @@
+﻿@model UnionManager.ViewModels.User.UserDetailViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index"><i class="icon-home"></i>خانه</a></li>
+            <li><a href="/User/Users">کاربران</a></li>
+            <li class="active">جزئیات کاربران</li>
+        </ul>
+        <!--breadcrumbs end -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <section class="panel">
+            <header class="panel-heading">جزئیات کاربر</header>
+            <div class="panel-body">
+                <div class="row">
+                    @if (Model.User.Image != null)
+                    {
+                        <img src="~/Files/UploadImages/@Model.User.Image" width="128" height="128" style="margin-right: 20px;" />
+                    }
+                    else
+                    {
+                        <img src="~/Files/Icons/1497336707_profle.png" width="128" height="128" style="margin-right: 20px;" />
+                    }
+                </div>
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>نام :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p style="color: #a55518; font-size: 12px;">@Model.User.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>نام خانوادگی :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p style="color: #a55518; font-size: 12px;">@Model.User.Family</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>نقش :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p style="color: #a55518; font-size: 12px;">@Model.User.Role.Name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>جنسیت :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                @if (Model.User.Gender == true)
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">مرد</p>
+                                }
+                                else
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">زن</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>کد ملی :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p style="color: #a55518; font-size: 12px;">@Model.User.NationalCode</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p>شماره شناسنامه :</p>
+                            </div>
+                            <div class="col-lg-6">
+                                @if (Model.User.IdNo != null)
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">@Model.User.IdNo</p>
+                                }
+                                else
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">-</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>تاریخ تولد :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                @if (Model.User.BirthDate != null)
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">@Convert.ToDateTime(Model.User.BirthDate).ToPersianDateString()</p>
+                                }
+                                else
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">-</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>بیمه شده :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                @if (Model.User.IsInsuranced == true)
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">بله</p>
+                                }
+                                else
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">خیر</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>شماره موبایل :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                @if (Model.User.Mobile != null)
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">@Model.User.Mobile</p>
+                                }
+                                else
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">-</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>تلفن ثابت :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                @if (Model.User.Tel != null)
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">@Model.User.Tel</p>
+                                }
+                                else
+                                {
+                                    <p style="color: #a55518; font-size: 12px;">-</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>نام کاربری :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p style="color: #a55518; font-size: 12px;">@Model.User.Username</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <p>وضعیت :</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <p style="color: #a55518; font-size: 12px;">@Model.User.Status</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <p>کلمه عبور :</p>
+                                </div>
+                                <div class="col-lg-7">
+                                    <p style="color: #a55518; font-size: 12px;">@Model.User.Password.Decrypt()</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p>اصناف :</p>
+                            </div>
+                            <div class="col-lg-10">
+                                <p style="color: #a55518; font-size: 12px; display: inline;">@Model.UserTrades</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <!-- row -->
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p>وسایل نقلیه</p>
+                            </div>
+                            <div class="col-lg-10">
+                                <p style="color: #a55518; font-size: 12px; display: inline;">@Model.UserVehicles</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+                <div class="row" style="margin-top: 15px;">
+                    <a href="/User/Users" style="margin-left: 30px; font-size: 15px; float: left;">لیست کاربران</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

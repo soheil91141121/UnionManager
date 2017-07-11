@@ -1,0 +1,36 @@
+﻿@model UnionManager.ViewModels.Relation.RelationViewModel
+
+<div id="div_Vehicles">
+    <div style="height:350px; overflow-y: scroll">
+        <table class="table table-striped border-top table-hover" id="tbl_Vehicles">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>مدل</th>
+                    <th>گروه</th>
+                    <th>شماره پلاک</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var counter = 1;
+                    foreach (var item in Model.Vehicles)
+                    {
+                        <tr class="gradeX">
+                            <td>@counter</td>
+                            <td>@item.Model</td>
+                            <td>@item.VehicleGroup.Name</td>
+                            <td>@item.NumberPlates</td>
+                            <td>
+                                <button class="btn btn-success btn-xs" onclick="setVehicleById(@item.Id)" title="افزودن"><i class="icon-plus"></i></button>
+                            </td>
+                        </tr>
+                        counter = counter + 1;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
